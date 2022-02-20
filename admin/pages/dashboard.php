@@ -1,0 +1,18 @@
+<?php
+    $title = 'dashboard';
+    session_start();
+    require_once '../init.php' ;
+    require_once '../core/classes/dashboard.php';
+    $dashboard = new Dashboard();
+    
+
+
+    require_once  $inc . 'header.inic.php' ;
+?>
+</head>
+<body>
+    
+<?php require_once '../core/includes/navbar.inic.php' ?>
+
+
+<?php require_once  $inc . 'footer.inic.php' ?>

@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+/* nav */
+@media(min-width:992px){
+    .container{
+    position: relative;
+    }
+    li.dropdown{
+        position: absolute;
+        right: 0;
+    }
+    li.dropdown ul.dropdown-menu{
+        left: -80px;
+    }
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: #fff;
+}
+.navbar-dark .navbar-brand{
+    color: #000;
+    margin-right: 100px;
+}
+/* finish nav */

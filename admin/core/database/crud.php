@@ -20,4 +20,9 @@ class Crud{
         }
         return $result ;
     }
+
+    function update($query,array $params=[]){
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+    }
 }

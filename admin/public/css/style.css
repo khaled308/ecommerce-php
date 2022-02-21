@@ -11,6 +11,9 @@ a{
     color: inherit;
 }
 /* nav */
+nav.navbar{
+    margin-bottom: 100px;
+}
 @media(min-width:992px){
     .container{
     position: relative;
@@ -30,4 +33,12 @@ a{
     color: #000;
     margin-right: 100px;
 }
-/* finish nav */
+h2.title{
+    width: fit-content;
+    margin: 0 auto 30px;
+}
+@media(min-width:992px){
+    h2.title{
+        margin-left: 480px;
+    }
+}

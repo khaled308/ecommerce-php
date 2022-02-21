@@ -5,6 +5,8 @@ class Utilities{
         $this->crud = new Crud();
         $this->updateProfile();
         $this->addMember();
+        $this->displayAllData();
+        $this->deleteMember();
     }
     function updateProfile(){
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit'])){
@@ -44,6 +46,28 @@ class Utilities{
             }
             else echo json_encode(["status"=>"404"]);
             exit();
+        }
+    }
+
+    function displayAllData(){
+        if($_GET['url'] ==='members'){
+            $query = "SELECT id,user_name,full_name,email FROM users  ";
+            $_SESSION['member_data']= $this->crud->read($query);
+        }
+
+    }
+
+    function deleteMember(){
+        if(isset($_GET['action'])){
+            if($_GET['action'] ==='delete' && $_GET['id']){
+                
+                $query = "DELETE FROM users WHERE id=:id AND group_id != '1' ";
+                $this->crud->delete($query,['id'=>$_GET['id']]);
+                echo json_encode(['status'=>'ok']);
+            }
+            else json_encode(['status'=>404]);
+            exit();
+            
         }
     }
 

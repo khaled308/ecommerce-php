@@ -25,4 +25,9 @@ class Crud{
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
     }
+
+    function delete($query,array $params=[]){
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+    }
 }

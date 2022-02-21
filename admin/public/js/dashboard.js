@@ -53,3 +53,27 @@ if(addMemberForm){
         })
     })
 }
+
+
+const membersIdData = Array.from(document.querySelectorAll('table td.id'))
+const editMemberBtn = document.querySelectorAll('.edit-member')
+const deleteMemberBtn = document.querySelectorAll('.delete-member')
+
+const URLMembers = '/shop/admin/pages/members';
+
+if(membersIdData.length > 0){
+    deleteMemberBtn.forEach((btn,index)=>{
+        btn.addEventListener('click',()=>{
+            fetch(`${URLMembers}?action=delete&id=${membersIdData[index].textContent}`)
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.status == 'ok'){
+                    membersIdData.splice(index,1)
+                    location.href = URLMembers ;
+                }
+            })
+        })
+    })
+}
+
+

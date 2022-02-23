@@ -1,33 +1,51 @@
 <?php
+namespace db ;
+use PDO ;
 class Crud{
     function __construct()
     {
         $this->pdo = connect();
     }
 
-    function create($query,array $params=[]){
+    function create(string $table, $data){
+        $keys = array_keys($data);
+        $vals = [];
+        foreach($keys as $key){
+            $vals[] = ":$key";
+        }
+        $keysStr = join(',',$keys);
+        $valsStr = join(',',$vals);
+        $query = "INSERT INTO $table($keysStr) VALUES($valsStr)";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
+        $stmt->execute($data);
     }
 
-    function read($query,array $params = []){
+    function read(string $table,$id){
+        $query = "SELECT * FROM $table WHERE id=:id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-        //extract data 
-        $result = [] ;
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $result[] = $row ;
-        }
+        $stmt->execute(['id'=>$id]);
+        $result = $stmt->fetch();
         return $result ;
     }
 
-    function update($query,array $params=[]){
+
+    function update(string $tableName,int $id, array $data){
+        $keys = array_keys($data);
+        $new_keys = [];
+        foreach($keys as $key){
+            $new_keys[] = "$key=:$key";
+        }
+
+        $keysStr = join(',',$new_keys);
+        $query = "UPDATE $tableName SET $keysStr WHERE id=:id ";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
+        $data['id'] = $id ;
+        $stmt->execute($data);
     }
 
-    function delete($query,array $params=[]){
+    function delete(string $table,$id){
+        $query = "DELETE FROM $table WHERE id=:id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
+        $stmt->execute(['id'=>$id]);
     }
 }

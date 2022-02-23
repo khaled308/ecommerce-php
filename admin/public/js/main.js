@@ -13,6 +13,5 @@ btn.addEventListener('click',e=>{
         if(data.status === 'ok'){
             location.href = URL + 'pages/dashboard'
         }
-
     })
 })

@@ -5,7 +5,7 @@
         <div class="mb-3 row justify-content-center">
             <label for="username" class="col-sm-2 col-form-label">User Name</label>
             <div class="col-sm-10 col-md-5">
-                <input type="text" class="form-control" id="username" autocomplete="off" name="username"
+                <input type="text" class="form-control" id="username" autocomplete="off" name="user_name"
                 value="<?= $_SESSION['data']['user_name'] ?>">
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="mb-3 row justify-content-center">
             <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
             <div class="col-sm-10 col-md-5">
-                <input type="text" class="form-control" id="fullName" autocomplete="off" name="fullname"
+                <input type="text" class="form-control" id="fullName" autocomplete="off" name="full_name"
                 value="<?= $_SESSION['data']['full_name'] ?>">
             </div>
         </div>

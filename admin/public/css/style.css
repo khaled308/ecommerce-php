@@ -52,3 +52,24 @@ form.add{
 form.add-appear{
     display: block;
 }
+
+table.table-hide{
+    display: none;
+}
+
+.stats .content h4{
+    font-size: 15px;
+}
+.content{
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #fff;
+}
+.stats span{
+    font-size: 40px;
+}
+
+.latest{
+    margin-top: 50px;
+}

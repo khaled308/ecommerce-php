@@ -2,31 +2,22 @@
 class Utilities{
     function __construct()
     {
-        $this->crud = new Crud();
-        $this->updateProfile();
+        $this->crud = new UserDB\Crud();
         $this->addMember();
         $this->displayAllData();
         $this->deleteMember();
+        $this->updateMember();
     }
-    function updateProfile(){
+
+    function updateProfile($id){
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit'])){
             unset($_POST['edit']);
             $data = $this->prepare($_POST);
             if($this->validate($data)){
-                $passord_query =  'password=:password';
-                if(empty($data['password'])){
-                    $passord_query = '';
-                    unset($data['password']);
-                }
-                else{
-                    $data['password'] = sha1($data['password']);
-                }
-                $id = $_SESSION['id'] ;
-                $query = trim("UPDATE  users SET user_name=:username, full_name=:fullname,email=:email,$passord_query",',').
-                " WHERE id=$id";
-                $this->crud->update($query,$data);
-
-                echo json_encode(["status"=>'ok']);
+                if(empty($data['password'])) unset($data['password']);
+                else $data['password'] = sha1($data['password']);
+                $this->crud->update('users',$id,$data);
+                echo json_encode(["status"=>'ok','id'=>$id]);
             }
             else echo json_encode(["status"=>"404"]);
             exit();
@@ -39,9 +30,7 @@ class Utilities{
             $data = $this->prepare($_POST);
             if($this->validate($data)&& !empty($data['password'])){
                 $data['password'] = sha1($data['password']);
-                $query = "INSERT INTO users(user_name,email,full_name,password) VALUES(:username,:email,:fullname,:password)";
-                $this->crud->create($query,$data);
-
+                $this->crud->create('users',$data);
                 echo json_encode(["status"=>'ok']);
             }
             else echo json_encode(["status"=>"404"]);
@@ -51,26 +40,36 @@ class Utilities{
 
     function displayAllData(){
         if($_GET['url'] ==='members'){
-            $query = "SELECT id,user_name,full_name,email FROM users  ";
-            $_SESSION['member_data']= $this->crud->read($query);
+            $_SESSION['member_data']= $this->crud->displayMembers();
         }
-
     }
 
     function deleteMember(){
-        if(isset($_GET['action'])){
-            if($_GET['action'] ==='delete' && $_GET['id']){
-                
-                $query = "DELETE FROM users WHERE id=:id AND group_id != '1' ";
-                $this->crud->delete($query,['id'=>$_GET['id']]);
+        if(isset($_GET['action']) && $_GET['action'] ==='delete'){
+            if($_GET['id']){
+                $this->crud->delete('users',$_GET['id']);
                 echo json_encode(['status'=>'ok']);
             }
-            else json_encode(['status'=>404]);
+            else echo json_encode(['status'=>404]);
             exit();
             
         }
     }
 
+    function updateMember(){
+        if(isset($_GET['action']) && $_GET['action'] ==='edit'){
+            if(isset($_GET['id'])){
+                $id = $_GET['id'] ;
+                $_SESSION['data'] = $this->crud->read('users',$id);
+                echo json_encode(['status'=>'ok']) ;
+            }
+            else echo json_encode(['status'=>404]);
+            exit();
+        }
+        if(isset($_GET['id'])) $this->updateProfile($_GET['id']);
+    }
+
+    
     function prepare($data){
         $new_data = [];
         foreach($data as $key=>$val){

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ .'/core/database/db.php';
 require_once __DIR__ . '/core/database/crud.php';
+require_once __DIR__ . '/core/database/crud.user.php';
 require_once __DIR__ .'/core/functions/login.php';
 
 

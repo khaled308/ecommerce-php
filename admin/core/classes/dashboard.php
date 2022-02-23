@@ -2,7 +2,7 @@
 class Dashboard{
     function __construct()
     {
-        $this->crud = new Crud();
+        $this->crud = new db\Crud();
         $this->utilites = new Utilities();
         $this->server = $_SERVER['SERVER_NAME'];
         $this->logged = false ;
@@ -44,26 +44,33 @@ class Dashboard{
             case 'members':
                 require_once './add-member.php';
                 break ;
+            case 'dashboard':
+                require_once './dashboard-statistics.html';
+                break ;    
         }
     }
 
     function handleCases(){
         switch($this->URL){
             case 'dashboard': 
+                $this->page = 'dashboard'; 
                 break;
 
             case 'members':
                 $this->page = 'members'; 
                 break;
 
+            case 'members/edit':
+                $this->page = 'edit'; 
+                break;  
+        
             case 'logout':
                 $this->logOut();
                 break ;  
             case 'edit_profile':
                 $this->page = 'edit';
-                $id = $_SESSION['id'] ;
-                $query = "SELECT * FROM users WHERE id=$id";
-                $_SESSION['data'] = $this->crud->read($query)[0];
+                $_SESSION['data'] = $this->crud->read('users',$_SESSION['id']);
+                $this->utilites->updateProfile($_SESSION['id']);
                 break ;      
 
             default :

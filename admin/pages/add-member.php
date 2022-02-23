@@ -1,3 +1,4 @@
+<!-- Add member Form -->
 <form method="POST" class="add">
     <div class="container">
         <div class="mb-3 row justify-content-center">
@@ -9,7 +10,7 @@
         <div class="mb-3 row justify-content-center">
             <label for="username" class="col-sm-2 col-form-label">User Name</label>
             <div class="col-sm-10 col-md-5">
-                <input type="text" class="form-control" id="username" autocomplete="off" name="username">
+                <input type="text" class="form-control" id="username" autocomplete="off" name="user_name">
             </div>
         </div>
 
@@ -30,7 +31,7 @@
         <div class="mb-3 row justify-content-center">
             <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
             <div class="col-sm-10 col-md-5">
-                <input type="text" class="form-control" id="fullName" autocomplete="off" name="fullname">
+                <input type="text" class="form-control" id="fullName" autocomplete="off" name="full_name">
             </div>
         </div>
 
@@ -42,9 +43,11 @@
         </div>
 
     </div>
-</form>
+</form> <!-- End Add Member Form -->
 
+<!-- Edit Member Form -->
 
+<!-- view Member in table -->
 <div class="container">
     <table class="table table-dark table-hover">
         <thead>
@@ -72,8 +75,8 @@
             <?php } ?>
         </tbody>
     </table>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary add-member">
         <i class="fa-solid fa-plus"></i>
         Add New Member
     </button>
-</div>
+</div> <!-- End view Member Form -->

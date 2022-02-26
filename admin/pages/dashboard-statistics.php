@@ -1,3 +1,9 @@
+<?php
+    $pending = 0 ;
+    foreach($_SESSION['members_data'] as $row){
+        if($row['register_status'] == 0) $pending++;
+    }
+?>
 <div class="container">
     <h2 class="text-center mb-5">Dashboard</h2>
     <div class="row">
@@ -10,7 +16,7 @@
         <div class="col-sm-3 stats">
             <div class="content">
                 <h4>Pending Members</h4>
-                <span>200</span>
+                <span><?= $pending ?></span>
             </div>
         </div>
         <div class="col-sm-3 stats">

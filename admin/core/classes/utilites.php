@@ -7,6 +7,7 @@ class Utilities{
         $this->displayAllData();
         $this->deleteMember();
         $this->updateMember();
+        $this->activateMember();
     }
 
     function updateProfile($id){
@@ -40,7 +41,7 @@ class Utilities{
 
     function displayAllData(){
         if($_GET['url'] ==='members'){
-            $_SESSION['member_data']= $this->crud->displayMembers();
+            $_SESSION['members_data']= $this->crud->displayMembers();
         }
     }
 
@@ -69,6 +70,19 @@ class Utilities{
         if(isset($_GET['id'])) $this->updateProfile($_GET['id']);
     }
 
+    function activateMember(){
+        if(isset($_GET['action']) && $_GET['action'] ==='activate'){
+            if($_GET['id']){
+                $id = $_GET['id'] ;
+                $data = ['register_status'=>1];
+                $this->crud->update('users',$id,$data);
+                echo json_encode(['status'=>'ok','id'=>$id]) ;
+            }
+            else echo json_encode(['status'=>404]);
+            exit();
+            
+        }
+    }
     
     function prepare($data){
         $new_data = [];

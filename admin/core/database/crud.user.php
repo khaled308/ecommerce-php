@@ -18,7 +18,7 @@ class Crud extends DB{
     }
 
     function displayMembers(){
-        $query = "SELECT id,user_name,full_name,email FROM users WHERE group_id != '1' ";
+        $query = "SELECT id,user_name,full_name,email,added_at,register_status FROM users WHERE group_id != '1' ";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         //extract data 

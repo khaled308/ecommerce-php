@@ -4,6 +4,7 @@ const editProfileForm = document.querySelector('.edit')
 const membersIdData = Array.from(document.querySelectorAll('table td.id'))
 const editMemberBtn = document.querySelectorAll('.edit-member')
 const deleteMemberBtn = document.querySelectorAll('.delete-member')
+const activateMemberBtn = document.querySelectorAll('.activate-member')
 
 
 
@@ -17,7 +18,6 @@ links.forEach(link=>{
         link.addEventListener('click',e=>{
             const URL = location.href
 
-            // bad solution
             const lastChar = urlArr[urlArr.length - 1] 
             if(lastChar=== 'edit' || typeof Number(lastChar) === 'number'){
                 e.preventDefault()
@@ -105,6 +105,21 @@ if(membersIdData.length > 0){
             })
         })
     })
+
+    activateMemberBtn.forEach((btn)=>{
+        btn.addEventListener('click',()=>{
+            const id = btn.parentElement.parentElement.children[0].textContent
+            fetch(`${location.href}?action=activate&id=${id}`)
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.status == 'ok'){
+                    location.href = URLMembers ;
+                }
+            })
+        })
+    })
+
+    
 }
 
 

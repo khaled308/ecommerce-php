@@ -54,24 +54,31 @@
             <th>ID</th>
             <th>User Name</th>
             <th>Full Name</th>
-            <th>Email Name</th>
+            <th>Email</th>
+            <th>Register Date</th>
             <th>Controls</th>
         </thead>
         <tbody>
             <?php 
-                foreach($_SESSION['member_data'] as $order=>$row){
+                foreach($_SESSION['members_data'] as $order=>$row){
                     $class = $order%2 == 0 ? 'table-active' : '';
             ?>
-                    <tr class="<?= $class ?>"></tr>
+                    <tr class="<?= $class ?>">
                     <?php foreach($row as $key=>$val ){ 
                         $idClass = $key === 'id' ? 'id' : ''
                     ?>
+                        <?php if($key === 'register_status' ) continue ;?>
+                        
                         <td class="<?= $idClass ?>" ><?= $val ?></td>
             <?php } ?>
-            <td>
-                <button class="btn btn-success edit-member">Edit</button>
-                <button class="btn btn-danger delete-member">Delete</button>
-            </td>
+                <td>
+                    <button class="btn btn-success edit-member">Edit</button>
+                    <button class="btn btn-danger delete-member">Delete</button>
+                    <?php if($key === 'register_status' && $val == 0) {?>
+                        <button class="btn btn-primary activate-member">Activate</button>
+                    <?php } ?>    
+                </td>
+            </tr>
             <?php } ?>
         </tbody>
     </table>

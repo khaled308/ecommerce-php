@@ -45,7 +45,7 @@ class Dashboard{
                 require_once './add-member.php';
                 break ;
             case 'dashboard':
-                require_once './dashboard-statistics.html';
+                require_once './dashboard-statistics.php';
                 break ;    
         }
     }

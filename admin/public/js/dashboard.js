@@ -5,11 +5,17 @@ const membersIdData = Array.from(document.querySelectorAll('table td.id'))
 const editMemberBtn = document.querySelectorAll('.edit-member')
 const deleteMemberBtn = document.querySelectorAll('.delete-member')
 const activateMemberBtn = document.querySelectorAll('.activate-member')
-
-
+const addMemberBtn = document.querySelector('.add-member')
 
 const addMemberForm = document.querySelector('.add')
 const table = document.querySelector('table')
+
+const addCategoryBtn = document.querySelector('.add-category-btn')
+const saveCategoryBtn = document.querySelector('.save-category-btn')
+const addCategoryForm = document.querySelector('.add-category')
+const addCategoryFormType = document.querySelector('.category-form-type')
+const allCategories = document.querySelectorAll('.category')
+const CategoryManage = document.querySelector('.category-wrapper')
 
 links.forEach(link=>{
     const urlArr = location.href.split('/')
@@ -123,7 +129,6 @@ if(membersIdData.length > 0){
 }
 
 
-const addMemberBtn = document.querySelector('.add-member')
 
 if(addMemberBtn){
     addMemberBtn.addEventListener('click',(e)=>{
@@ -140,5 +145,86 @@ if(addMemberBtn){
             table.classList.add('table-hide')
             e.target.textContent = `View All Members`
         }
+    })
+}
+
+//categories
+function saveCategory(id = ''){
+    if(saveCategoryBtn){
+        saveCategoryBtn.addEventListener('click',(e)=>{
+            e.preventDefault();
+            const URL = location.href
+            const data = new FormData(addCategoryForm)
+            data.append("id", id);
+            fetch(URL,{
+                method : 'POST',
+                body : data
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                
+                if(data.status == 'ok'){
+                    addCategoryFormType.value = 'add'
+                    location.href = '/shop/admin/pages/dashboard'
+                }
+                console.log(data)
+            })
+        })
+    }
+}
+
+if(addCategoryBtn){
+    addCategoryBtn.addEventListener('click',()=>{
+        addCategoryFormType.value = 'add'
+        CategoryManage.classList.add('categories-hidden')
+        addCategoryForm.classList.remove('form-category-hidden')
+    })
+    saveCategory()
+}
+
+if(allCategories && allCategories.length > 0){
+    const URL = location.href
+    const editCategoryBtn = document.querySelectorAll('.edit-category')
+    const deleteCategoryBtn = document.querySelectorAll('.delete-category')
+    editCategoryBtn.forEach((btn,index)=>{
+        btn.addEventListener('click',()=>{
+            CategoryManage.classList.add('categories-hidden')
+            addCategoryForm.classList.remove('form-category-hidden')
+            const id = allCategories[index].dataset.id
+            const newUrl = `${URL}?action=edit_category&id=${id}`
+            fetch(newUrl)
+            .then(res=>res.json())
+            .then(({data,status})=>{
+                document.querySelector('.category-name').value = data.name
+                document.querySelector('.category-description').value = data.description
+                document.querySelectorAll('.category-visibility').forEach(v=>{
+                    if(v.value == data.visibility) v.checked = true
+                })
+                document.querySelectorAll('.comments').forEach(c=>{
+                    if(c.value == data.allow_comment) c.checked = true
+                })
+                document.querySelectorAll('.ads').forEach(a=>{
+                    if(a.value == data.allow_ads) a.checked = true
+                })
+            })
+            // window.history.pushState({'detail':'updated by js'},'new page',newUrl)
+            // window.history.replaceState({'detail':'updated by js'},'new page',newUrl)
+            addCategoryFormType.value = 'edit'
+            saveCategory(id)
+        })
+    })
+
+    deleteCategoryBtn.forEach((btn,index)=>{
+        btn.addEventListener('click',()=>{
+            const id = allCategories[index].dataset.id
+            const newUrl = `${URL}?action=delete_category&id=${id}`
+            fetch(newUrl)
+            .then(res=>res.json())
+            .then(({status})=>{
+                if(status == 'ok'){
+                    location.href = '/shop/admin/pages/dashboard'
+                }
+            })
+        })
     })
 }

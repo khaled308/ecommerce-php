@@ -73,3 +73,36 @@ table.table-hide{
 .latest{
     margin-top: 50px;
 }
+.card .other span{
+    padding: 10px;
+    color: #fff;
+}
+.card .other span:first-child{
+    background-color: #e74c3c;
+}
+.card .other span:nth-child(2){
+    background-color: #34495e;
+}
+.card .other span:last-child{
+    background-color: #f39c12;
+}
+.category-manage{
+    max-height: 450px;
+    overflow: auto;
+}
+
+.category{
+    position: relative;
+}
+.btns{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+.form-category-hidden{
+    display: none;
+}
+.categories-hidden{
+    display: none;
+}

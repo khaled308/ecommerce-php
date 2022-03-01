@@ -2,7 +2,8 @@
 class Dashboard{
     function __construct()
     {
-        $this->crud = new db\Crud();
+        $this->crud = new UserDB\Crud();
+        $this->categoryCrud = new CategoryDB\Crud();
         $this->utilites = new Utilities();
         $this->server = $_SERVER['SERVER_NAME'];
         $this->logged = false ;
@@ -45,8 +46,13 @@ class Dashboard{
                 require_once './add-member.php';
                 break ;
             case 'dashboard':
+                $_SESSION['members_data'] = $this->crud->displayMembers();
                 require_once './dashboard-statistics.php';
-                break ;    
+                break ;  
+            case 'categories':
+                $_SESSION['categories_data'] = $this->categoryCrud->displayCtaegories();
+                require_once './categories.php';
+                break ;     
         }
     }
 
@@ -59,11 +65,9 @@ class Dashboard{
             case 'members':
                 $this->page = 'members'; 
                 break;
-
             case 'members/edit':
                 $this->page = 'edit'; 
                 break;  
-        
             case 'logout':
                 $this->logOut();
                 break ;  
@@ -72,7 +76,9 @@ class Dashboard{
                 $_SESSION['data'] = $this->crud->read('users',$_SESSION['id']);
                 $this->utilites->updateProfile($_SESSION['id']);
                 break ;      
-
+            case 'categories':
+                $this->page = 'categories'; 
+                break;    
             default :
                 header("HTTP/1.0 404 Not Found");
                 die ;
